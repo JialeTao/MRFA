@@ -10,7 +10,7 @@ The model is trained with PyTorch version 1.10 and Python version 3.8. Basic ins
     pip install -r requirements.txt
 
 ## **Datasets**
-Following [FOMM](https://github.com/AliaksandrSiarohin/first-order-model) to download the **Voxceleb1** dataset, and following [CelebV-HQ](https://github.com/CelebV-HQ/CelebV-HQ) to download the CelebV-HQ dataset. After downloading and pre-processing, the dataset should be placed in the `./data` folder or you can change the parameter `root_dir` in the config file. Note that we save the video dataset in PNG frames for better training IO performance. The tree structure of the dataset path is given in the following.
+Following [FOMM](https://github.com/AliaksandrSiarohin/first-order-model) to download the **Voxceleb1** dataset, and following [CelebV-HQ](https://github.com/CelebV-HQ/CelebV-HQ) to download the **CelebV-HQ** dataset. After downloading and pre-processing, the dataset should be placed in the `./data` folder or you can change the parameter `root_dir` in the config file. Note that we save the video dataset in PNG frames for better training IO performance. The tree structure of the dataset path is given in the following.
 
     |-- data/voxceleb1-png, data/celebvhq256-png
         |-- train
