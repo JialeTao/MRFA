@@ -5,7 +5,7 @@ Codes of the NeurIPS 2023 paper "Learning Motion Refinement for Unsupervised Fac
 **2023.12.02:** Codes are released.
 
 ## **Environments**
-The model is trained on 8 Tesla V100 cards with PyTorch version 1.10 and Python version 3.8. Basic installations are given in requiremetns.txt.
+The model is trained with PyTorch version 1.10 and Python version 3.8. Basic installations are given in requiremetns.txt.
 
     pip install -r requirements.txt
 
@@ -35,7 +35,7 @@ Following [FOMM](https://github.com/AliaksandrSiarohin/first-order-model) to dow
             |-- ...
 
 ## **Training**
-We train the model on 8 NVIDIA 3090 cards and use pytorch DistributedDataPrallel.
+We train the model on 8 NVIDIA 3090 cards or 4 NVIDIA A100 cards and use the Pytorch DistributedDataPrallel.
 
     CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 python -m torch.distributed.launch --nproc_per_node=8 run.py --config config/dataset.yaml
     
