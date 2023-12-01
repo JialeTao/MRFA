@@ -1,13 +1,8 @@
 ## **[NeurIPS 2023] Learning Motion Refinement for Unsupervised Face Animation**
 Codes of the NeurIPS 2023 paper "Learning Motion Refinement for Unsupervised Face Animation" will be released here in a few days.
 
-# **Motion Transformer for Unsupervised Image Animation**
-## **Codes**
-
-This is the project page of the paper **Motion Transformer for Unsupervised Image Animation (ECCV 2022)**. Due to the security policy of the company, we are in the code approval process, once it is finished, the codes will be released here.
-
 <!-- ### **Updates:** -->
-**2022.8.15:** Codes are released.
+**2023.12.02:** Codes are released.
 
 ## **Environments**
 The model is trained on 8 Tesla V100 cards, pytorch vesion 1.6 and 1.8 with python 3.6 are tested fine. Basic installations are given in requiremetns.txt.
