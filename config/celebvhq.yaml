@@ -1,0 +1,186 @@
+dataset_params:
+  root_dir: ./data/celebvhq256-png/
+  split_len: 11
+  frame_shape: [256, 256, 3]
+  id_sampling: True
+  pairs_list: 
+  augmentation_params:
+    flip_param:
+      horizontal_flip: True 
+      time_flip: True
+    jitter_param:
+      brightness: 0.1
+      contrast: 0.1
+      saturation: 0.1
+      hue: 0.1
+
+dense_motion:
+  block_expansion: 64
+  max_features: 1024
+  num_blocks: 5
+  scale_factor: 0.25
+  num_kp: 10
+  num_channels: 3
+  estimate_occlusion_map: True
+fomm_kp_detector:
+  block_expansion: 32
+  num_kp: 10
+  num_channels: 3
+  max_features: 1024
+  num_blocks: 5
+  temperature: 0.1
+  scale_factor: 0.25
+  estimate_jacobian: True
+  estimate_occlusion: False
+tpsm_kp_detector:
+  num_tps: 10
+tpsm_dense_motion:
+  block_expansion: 64
+  max_features: 1024
+  num_blocks: 5
+  scale_factor: 0.25
+  num_tps: 10
+  num_channels: 3
+
+raft_flow:
+  prior_only: False
+  num_kp: 10
+  dim: 256
+  size: 256
+  generator:
+    num_channels: 3
+    block_expansion: 64 
+    max_features: 512
+    num_up_blocks: 5
+  driving_encoder:
+    in_features: 10
+    block_expansion: 32 
+    max_features: 512
+    num_blocks: 5
+  source_encoder:
+    in_features: 13
+    block_expansion: 32 
+    max_features: 512
+    num_blocks: 5
+
+train_params:
+  ## [mtia, tpsm, fomm]
+  prior_model: mtia
+  num_epochs: 100
+  num_repeats: 5
+  epoch_milestones: [60, 90]
+  # ### enable this for tpsm
+  # epoch_milestones: [70, 90]
+  # ### enable this for tpsm
+
+  lr: 2.0e-4
+  batch_size: 80 
+  scales: [1, 0.5, 0.25, 0.125]
+  clip_grad: True
+  clip: 10
+  bg_start: 0
+  checkpoint_freq: 100
+  ### for tpsm
+  dropout_epoch: 35 
+  dropout_maxp: 0.3
+  dropout_startp: 0.1
+  dropout_inc_epoch: 10
+  ### for tpsm
+  
+  transform_params:
+    sigma_affine: 0.05
+    sigma_tps: 0.005
+    points_tps: 5
+  loss_weights:
+    perceptual: [10, 10, 10, 10, 10]
+    equivariance: 10
+    equivariance_jacobian: 10
+    # ### enable this for tpsm
+    # equivariance_jacobian: 0
+    # ### enable this for tpsm
+
+reconstruction_params:
+  num_videos: 1000
+  format: '.mp4'
+
+animate_params:
+  num_pairs: 50
+  format: '.mp4'
+  normalization_params:
+    adapt_movement_scale: False
+    use_relative_movement: True
+    use_relative_jacobian: True
+
+visualizer_params:
+  draw_border: True
+  colormap: 'gist_rainbow'
+
+mtia_kp_detector:
+  MODEL:
+    ESTIMATE_JACOBIAN: True
+    DATA_PREPROCESS: False
+    FIX_IMG2MOTION_ATTENTION: False
+    TRANSFORMER_DEPTH: 12
+    TRANSFORMER_HEADS: 8
+    DIM: 192 # 4*4*3
+    INIT_WEIGHTS: False
+    NAME: pose_tokenpose_b
+    NUM_JOINTS: 10
+    PRETRAINED: ''
+    PATCH_SIZE: [4, 4]
+    IMAGE_SIZE: [256, 256]
+    HEATMAP_SIZE: [64, 64]
+
+    ## default
+    TAG_PER_JOINT: True
+    HIDDEN_HEATMAP_DIM: -1
+    MULTI_TRANSFORMER_DEPTH: [12, 12]
+    MULTI_TRANSFORMER_HEADS: [16, 16]
+    MULTI_DIM: [48, 48]
+    NUM_BRANCHES: 1
+    BASE_CHANNEL: 32
+    TRANSFORMER_MLP_RATIO: 3
+    POS_EMBEDDING_TYPE: 'sine-full'
+    TEMPERATURE: 0.1
+    TARGET_TYPE: gaussian
+    INIT: True
+
+    SIGMA: 2
+    EXTRA:
+      PRETRAINED_LAYERS:
+      - 'conv1'
+      - 'bn1'
+      - 'conv2'
+      - 'bn2'
+      - 'layer1'
+      - 'transition1'
+      - 'stage2'
+      - 'transition2'
+      - 'stage3'
+      FINAL_CONV_KERNEL: 1
+      STAGE2:
+        NUM_MODULES: 1
+        NUM_BRANCHES: 2
+        BLOCK: BASIC
+        NUM_BLOCKS:
+        - 4
+        - 4
+        NUM_CHANNELS:
+        - 32
+        - 64
+        FUSE_METHOD: SUM
+      STAGE3:
+        NUM_MODULES: 4
+        NUM_BRANCHES: 3
+        BLOCK: BASIC
+        NUM_BLOCKS:
+        - 4
+        - 4
+        - 4
+        NUM_CHANNELS:
+        - 32
+        - 64
+        - 128
+        FUSE_METHOD: SUM
+      ## default
+  
