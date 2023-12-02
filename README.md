@@ -53,7 +53,9 @@ To make a demo animation, specify the driving video and source image, the result
 ## **Pretrained models**
 Coming soon
 
-## **Citation**
+## **BibTex**
+If our method MRFA is helpful for your projects, please cite our paper, thanks!
+
     @inproceedings{
     tao2023learning,
     title={Learning Motion Refinement for Unsupervised Face Animation},
