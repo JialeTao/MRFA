@@ -181,40 +181,40 @@ class MRFA(nn.Module):
         self.down =  AntiAliasInterpolation2d(3, 0.25)
 
     def forward(self, x, epoch=100, is_train=True):
-        
+
         kp_s = self.encoder(x['source'])
         kp_d = self.encoder(x['driving'])
-    
+
         img_down = self.down(x['source'])
         if(epoch>=self.bg_start):
             bg_param = self.bg_predictor(x['source'], x['driving'])
         else:
             bg_param = None
-        
-        if self.train_params['prior_model'] == 'tpsm':
-            # dropout_p will linearly increase from dropout_startp to dropout_maxp 
+
+        if self.train_params['prior_model'] == 'tpsm' and epoch < self.dropout_epoch:
+            # dropout_p will linearly increase from dropout_startp to dropout_maxp
             dropout_flag = True
             dropout_p = min(epoch/self.dropout_inc_epoch * self.dropout_maxp + self.dropout_startp, self.dropout_maxp)
         else:
             dropout_flag = False
             dropout_p = 0
         dense_motion = self.dense_motion(x['source'], kp_d, kp_s, bg_param=bg_param, dropout_flag=dropout_flag, dropout_p=dropout_p)
-    
+
         if self.train_params['prior_model'] == 'tpsm':
             kp_s_value = kp_s['kp'].view(x['source'].shape[0], -1, 5, 2).mean(2)
             kp_d_value = kp_d['kp'].view(x['driving'].shape[0], -1, 5, 2).mean(2)
         else:
             kp_s_value = kp_s['kp']
             kp_d_value = kp_d['kp']
-        
+
         gen, warp_img, occlusion = self.decoder(kp_s_value, kp_d_value, dense_motion, img=img_down, img_full=x['source'])
         warp_img = torch.cat([warp_img, occlusion.repeat(1,3,1,1)], dim=3)
-        
+
         loss_values = {}
-        
+
         if not is_train:
             return gen, warp_img, loss_values, kp_s['kp'], kp_d['kp']
-        
+
 
         pyramide_real = self.pyramid(x['driving'])
         pyramide_generated = self.pyramid(gen)
@@ -245,7 +245,7 @@ class MRFA(nn.Module):
                 eye = torch.eye(2).view(1, 1, 2, 2).type(value.type())
                 value = torch.abs(eye - value)
                 loss_values['equivariance_jacobian'] = self.loss_weights['equivariance_jacobian'] * value
-            
+
         if epoch >= self.bg_start:
             bg_param_reverse = self.bg_predictor(x['driving'], x['source'])
             value = torch.matmul(bg_param, bg_param_reverse)
