@@ -39,7 +39,7 @@ We train the model on 8 NVIDIA 3090 cards or 4 NVIDIA A100 cards and use the Pyt
 
     CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 python -m torch.distributed.launch --nproc_per_node=8 run.py --config config/dataset.yaml
 
-Note that we utilize [MTIA](https://github.com/JialeTao/MTIA) as our prior motion model. However, it is also possible to train alternative motion models, such as [FOMM](https://github.com/AliaksandrSiarohin/first-order-model) and [TPSM](https://github.com/yoyo-nb/Thin-Plate-Spline-Motion-Model). This can be achieved by modifying the parameter `train_params.prior_model` in the configuration file. Moreover, changing the parameter `raft_flow.prior_only` to `True` results in training a prior-motion-based animation model.
+Note that we utilize [MTIA](https://github.com/JialeTao/MTIA) as our prior motion model. However, it is also possible to combine our method with alternative prior motion models, such as [FOMM](https://github.com/AliaksandrSiarohin/first-order-model) and [TPSM](https://github.com/yoyo-nb/Thin-Plate-Spline-Motion-Model). This can be achieved by modifying the parameter `train_params.prior_model` in the configuration file. Moreover, changing the parameter `raft_flow.prior_only` to `True` results in training a prior-motion-based animation model.
 ## **Evaluation**
 Evaluate video reconstruction with the following command, for more metrics, we recommend seeing [FOMM-Pose-Evaluation](https://github.com/AliaksandrSiarohin/pose-evaluation).
 
