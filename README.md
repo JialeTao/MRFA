@@ -2,7 +2,7 @@
 Codes of the NeurIPS 2023 paper "Learning Motion Refinement for Unsupervised Face Animation" will be released here in a few days.
 
 <!-- ### **Updates:** -->
-**2023.12.02:** Codes are released.
+**2023.12.01:** Codes are released.
 
 ## **Environments**
 The model is trained with PyTorch version 1.10 and Python version 3.8. Basic installations are given in requiremetns.txt.
