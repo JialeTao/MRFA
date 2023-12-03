@@ -67,3 +67,6 @@ If our method MRFA is helpful for your projects, please cite our paper, thanks!
 
 ## **Acknowledgements**
 The implementation is partially borrowed from [MTIA](https://github.com/JialeTao/MTIA), [TPSM](https://github.com/yoyo-nb/Thin-Plate-Spline-Motion-Model), and [FOMM](https://github.com/AliaksandrSiarohin/first-order-model). We thank the authors for their excellent work.
+
+## **Contact**
+Feel free to email me at `jialetao.std@gmail.com` if you have any questions.
