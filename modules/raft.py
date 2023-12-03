@@ -261,7 +261,7 @@ class RaftFlow(nn.Module):
             out_occlusion.append(F.sigmoid(occlusion))
             out_warp_f.append(out)
 
-            ## prior flow warping
+            ## coarse warping (prior motion flow)
             if i!= self.basic_res_index:
                 flow_res = F.interpolate(dense_motion['deformation'].permute(0,3,1,2), size=feature[i].shape[2:], mode='bilinear',align_corners=True)
                 occlusion_res = F.interpolate(dense_motion['occlusion'], size=feature[i].shape[2:], mode='bilinear',align_corners=True)
@@ -270,7 +270,7 @@ class RaftFlow(nn.Module):
                 occlusion_res = dense_motion['occlusion']
             out_warp_f_c.append(F.grid_sample(feature[i], flow_res.permute(0,2,3,1)))
             out_occlusion_c.append(F.sigmoid(occlusion_res))
-            ## prior flow warping
+            ## coarse warping (prior motion flow)
 
             ### updating flow by directly scaling initial flow
             if i < self.num_iter - 1:
