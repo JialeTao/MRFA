@@ -51,7 +51,7 @@ To make a demo animation, specify the driving video and source image, the result
     python demo.py --config path/to/config --checkpoint path/to/model.pth --driving_video path/to/video.mp4 --source_image path/to/image.png --result_video ./result.mp4 --adapt_scale --relative
 
 ## **Pretrained models**
-[BaiduDisk](https://pan.baidu.com/s/1sLbpjztPtdT5bojHVAuK4A?pwd=db3x), Passwd: db3x
+[GoogleDrive](https://pan.baidu.com/s/1sLbpjztPtdT5bojHVAuK4A?pwd=db3x)[BaiduDisk](https://pan.baidu.com/s/1sLbpjztPtdT5bojHVAuK4A?pwd=db3x) passwd:db3x
 
 ## **BibTex**
 If our method MRFA is helpful for your projects, please cite our paper, thanks!
